@@ -5,17 +5,22 @@ const sections = [...document.querySelectorAll('main section[id]')];
 const copyButton = document.querySelector('.copy-email');
 const toast = document.querySelector('.toast');
 
+const setMenuOpen = (open) => {
+  menuButton.setAttribute('aria-expanded', String(open));
+  nav.classList.toggle('open', open);
+};
+
 menuButton.addEventListener('click', () => {
-  const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
-  menuButton.setAttribute('aria-expanded', String(!isOpen));
-  nav.classList.toggle('open', !isOpen);
+  setMenuOpen(menuButton.getAttribute('aria-expanded') !== 'true');
 });
 
-navLinks.forEach((link) => {
-  link.addEventListener('click', () => {
-    menuButton.setAttribute('aria-expanded', 'false');
-    nav.classList.remove('open');
-  });
+navLinks.forEach((link) => link.addEventListener('click', () => setMenuOpen(false)));
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && nav.classList.contains('open')) {
+    setMenuOpen(false);
+    menuButton.focus();
+  }
 });
 
 const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -40,6 +45,8 @@ const sectionObserver = new IntersectionObserver((entries) => {
 
 sections.forEach((section) => sectionObserver.observe(section));
 
+let toastTimer;
+
 copyButton.addEventListener('click', async () => {
   const email = copyButton.dataset.email;
   try {
@@ -49,7 +56,8 @@ copyButton.addEventListener('click', async () => {
     toast.textContent = email;
   }
   toast.classList.add('show');
-  window.setTimeout(() => toast.classList.remove('show'), 2200);
+  window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => toast.classList.remove('show'), 2200);
 });
 
 document.querySelector('#year').textContent = new Date().getFullYear();
