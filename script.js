@@ -60,4 +60,31 @@ copyButton.addEventListener('click', async () => {
   toastTimer = window.setTimeout(() => toast.classList.remove('show'), 2200);
 });
 
+const contactForm = document.querySelector('.contact-form');
+const formStatus = contactForm.querySelector('.form-status');
+const submitButton = contactForm.querySelector('button[type="submit"]');
+
+contactForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  submitButton.disabled = true;
+  formStatus.classList.remove('error');
+  formStatus.textContent = 'Sending...';
+  try {
+    const response = await fetch(contactForm.action, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(Object.fromEntries(new FormData(contactForm))),
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) throw new Error(result.message);
+    contactForm.reset();
+    formStatus.textContent = 'Thanks, your message has been sent. I will get back to you soon.';
+  } catch (error) {
+    formStatus.classList.add('error');
+    formStatus.textContent = `Message not sent${error.message ? `: ${error.message}` : ''}. Please try again or copy my email address.`;
+  } finally {
+    submitButton.disabled = false;
+  }
+});
+
 document.querySelector('#year').textContent = new Date().getFullYear();
