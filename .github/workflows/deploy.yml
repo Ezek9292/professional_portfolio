@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up SSH key
         env:
@@ -26,10 +26,30 @@ jobs:
           chmod 600 ~/.ssh/gh_key
           ssh-keygen -y -f ~/.ssh/gh_key > /dev/null || { echo "SSH_PRIVATE_KEY is not a valid private key"; exit 1; }
           ssh-keyscan -p "${{ secrets.SSH_PORT || 22 }}" -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+          echo "Loaded key fingerprint:"
+          ssh-keygen -lf ~/.ssh/gh_key
+
+      - name: Test SSH login
+        run: |
+          ssh -v -i ~/.ssh/gh_key -p "${{ secrets.SSH_PORT || 22 }}" \
+            -o BatchMode=yes -o IdentitiesOnly=yes \
+            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" 'echo "SSH OK as $(whoami) on $(hostname)"' 2>&1 \
+            | grep -E "Authenticating to|Offering public key|Server accepts key|Authentications that can continue|Permission denied|SSH OK"
 
       - name: Upload site files
+        env:
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
+          # Safety guard: rsync --delete removes everything in the target that
+          # is not in this repo, so only allow a dedicated web folder.
+          case "$DEPLOY_PATH" in
+            /var/www/?*) ;;
+            *) echo "Refusing to deploy: DEPLOY_PATH must be a folder under /var/www/ (e.g. /var/www/portfolio)"; exit 1 ;;
+          esac
+          case "$DEPLOY_PATH" in
+            *..*) echo "Refusing to deploy: DEPLOY_PATH must not contain '..'"; exit 1 ;;
+          esac
           rsync -avz --delete \
-            --exclude ".git" --exclude ".github" \
-            -e "ssh -i ~/.ssh/gh_key -p ${{ secrets.SSH_PORT || 22 }}" \
-            ./ "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}/"
+            --exclude ".git" --exclude ".github" --exclude "server" --exclude ".gitattributes" \
+            -e "ssh -o BatchMode=yes -o IdentitiesOnly=yes -i ~/.ssh/gh_key -p ${{ secrets.SSH_PORT || 22 }}" \
+            ./ "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:$DEPLOY_PATH/"
