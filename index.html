@@ -60,8 +60,9 @@
               <p class="eyebrow">Hi, I'm Ezekiel</p>
               <h1>Backend developer<br />in <span>Accra.</span></h1>
               <p class="lede">
-                I build APIs, authentication and databases with Go, Node.js and
-                Python, and deploy them on AWS EC2 with Nginx and PM2.
+                I build backend systems that run in production: APIs, auth,
+                payments and real-time features in Go, Node.js and Python. I
+                also deploy them and keep them running on AWS and Linux.
               </p>
               <div class="hero-actions">
                 <a class="button button-solid" href="#projects"
@@ -111,7 +112,7 @@
                     >GitHub</a
                   >
                   <a
-                    href="https://www.linkedin.com/in/mr-donkor-ezekiel"
+                    href="https://www.linkedin.com/in/donkor-ezekiel"
                     target="_blank"
                     rel="noreferrer"
                     >LinkedIn</a
@@ -216,55 +217,151 @@
             <h2>Projects</h2>
           </div>
 
-          <article class="featured-project reveal">
-            <div
-              class="architecture"
-              role="img"
-              aria-label="Architecture diagram: client connects to Node API, which uses Prisma to access PostgreSQL on an AWS EC2 deployment"
+          <article class="project-row has-shot reveal">
+            <a
+              class="project-shot"
+              href="https://starex.edonkor.dev/"
+              target="_blank"
+              rel="noreferrer"
+              tabindex="-1"
             >
-              <div class="node mono">CLIENT</div>
-              <span class="line"></span>
-              <div class="node accent mono">NODE API</div>
-              <span class="line"></span>
-              <div class="node mono">PRISMA</div>
-              <span class="line"></span>
-              <div class="node green mono">POSTGRES</div>
-              <p class="mono">AWS EC2 &middot; NGINX &middot; PM2</p>
-            </div>
-            <div class="project-copy">
-              <p class="project-id mono">FEATURED</p>
-              <h3>Axia Alumni Studio</h3>
+              <img
+                src="assets/project-starex.webp"
+                alt="The Star Experience ordering page showing the cocktail menu"
+                width="1200"
+                height="677"
+                loading="lazy"
+              />
+            </a>
+            <div>
+              <p class="project-role mono">COLLABORATION</p>
+              <h3>The Star Experience</h3>
               <p>
-                Backend for an alumni platform: REST APIs, PostgreSQL with Prisma
-                migrations, and user authentication.
+                Mobile-first food and drink ordering for a live event at The
+                Republic Bar &amp; Grill, Accra. Guests order from their table
+                and pay with Paystack; staff get orders in real time on
+                station and waiter boards, with push notifications. Includes
+                an admin panel for menu, staff, devices and orders.
               </p>
-              <ul class="project-points">
-                <li>Deployed on AWS EC2 with Nginx and PM2</li>
-                <li>
-                  Handled Linux server work, SSH access and production database
-                  issues
-                </li>
-                <li>Built with a team; the platform is live and in use</li>
+              <ul class="tags">
+                <li>Next.js</li>
+                <li>React</li>
+                <li>Tailwind CSS</li>
+                <li>Paystack</li>
+                <li>WebSockets</li>
+                <li>Web Push</li>
+                <li>Caddy</li>
+                <li>Cloudflare</li>
               </ul>
-              <div class="project-footer">
-                <ul class="tags">
-                  <li>Node.js</li>
-                  <li>Prisma</li>
-                  <li>PostgreSQL</li>
-                  <li>AWS</li>
-                </ul>
-                <a
-                  class="text-link mono"
-                  href="https://alumnistudio.axia.africa/"
-                  target="_blank"
-                  rel="noreferrer"
-                  >Visit project &#8599;</a
-                >
-              </div>
             </div>
+            <a
+              class="text-link mono"
+              href="https://starex.edonkor.dev/"
+              target="_blank"
+              rel="noreferrer"
+              >Live site &#8599;</a
+            >
           </article>
-
-          <article class="project-row reveal">
+          <article class="project-row has-shot reveal">
+            <a
+              class="project-shot"
+              href="https://districtgames.edonkor.dev/"
+              target="_blank"
+              rel="noreferrer"
+              tabindex="-1"
+            >
+              <img
+                src="assets/project-districtgames.webp"
+                alt="District Games standings table for the Taifa District church tournament"
+                width="1200"
+                height="684"
+                loading="lazy"
+              />
+            </a>
+            <div>
+              <h3>District Games</h3>
+              <p>
+                Tournament app for the Taifa District of SDA church games: live
+                standings, fixtures, schedules and team rosters. Church
+                organizers sign in with email OTP to manage their players, and
+                results stream to every viewer in real time.
+              </p>
+              <ul class="tags">
+                <li>Next.js</li>
+                <li>React</li>
+                <li>REST API</li>
+                <li>Server-Sent Events</li>
+                <li>OTP Auth</li>
+                <li>Resend</li>
+                <li>Cloudflare</li>
+              </ul>
+            </div>
+            <a
+              class="text-link mono"
+              href="https://districtgames.edonkor.dev/"
+              target="_blank"
+              rel="noreferrer"
+              >Live site &#8599;</a
+            >
+          </article>
+          <article class="project-row has-shot reveal">
+            <a
+              class="project-shot"
+              href="https://clinetteshipping.com/"
+              target="_blank"
+              rel="noreferrer"
+              tabindex="-1"
+            >
+              <img
+                src="assets/project-clinette.webp"
+                alt="Clinette Shipping homepage with shipment tracking search"
+                width="1200"
+                height="686"
+                loading="lazy"
+              />
+            </a>
+            <div>
+              <p class="project-role mono">COLLABORATION</p>
+              <h3>Clinette Shipping &amp; Logistics</h3>
+              <p>
+                Website and customer platform for a freight company offering
+                air and ocean freight, customs clearance and procurement.
+                Customers can request quotes and track shipments, with user
+                accounts and an admin settings area.
+              </p>
+              <ul class="tags">
+                <li>Next.js</li>
+                <li>React</li>
+                <li>Tailwind CSS</li>
+                <li>JWT Auth</li>
+                <li>WebSockets</li>
+                <li>Caddy</li>
+              </ul>
+            </div>
+            <a
+              class="text-link mono"
+              href="https://clinetteshipping.com/"
+              target="_blank"
+              rel="noreferrer"
+              >Live site &#8599;</a
+            >
+          </article>
+          <article class="project-row has-shot reveal">
+            <a
+              class="project-shot"
+              href="https://tonythedev01.github.io/EventPro-Frontend/"
+              target="_blank"
+              rel="noreferrer"
+              tabindex="-1"
+            >
+              <img
+                src="assets/project-eventpro.webp"
+                alt="EventPro landing page with a preview of the admin dashboard"
+                width="1200"
+                height="681"
+                loading="lazy"
+              />
+            </a>
             <div>
               <h3>EventPro</h3>
               <p>
@@ -286,7 +383,22 @@
               >Live demo &#8599;</a
             >
           </article>
-          <article class="project-row reveal">
+          <article class="project-row has-shot reveal">
+            <a
+              class="project-shot"
+              href="https://spotlight-flax.vercel.app/"
+              target="_blank"
+              rel="noreferrer"
+              tabindex="-1"
+            >
+              <img
+                src="assets/project-spotlight.webp"
+                alt="Spotlight landing page with a sample professional profile"
+                width="1200"
+                height="684"
+                loading="lazy"
+              />
+            </a>
             <div>
               <h3>Spotlight</h3>
               <p>
@@ -312,6 +424,26 @@
               >Live demo &#8599;</a
             >
           </article>
+          <article class="project-row reveal">
+            <div>
+              <h3>Axia Alumni Studio</h3>
+              <p>
+                Backend for an alumni platform: REST APIs, PostgreSQL with Prisma
+                migrations, and user authentication. Deployed on AWS EC2 with
+                Nginx and PM2; I handled Linux server work, SSH access and
+                production database issues. Built with a team.
+              </p>
+              <ul class="tags">
+                <li>Node.js</li>
+                <li>Prisma</li>
+                <li>PostgreSQL</li>
+                <li>AWS EC2</li>
+                <li>Nginx</li>
+                <li>PM2</li>
+              </ul>
+            </div>
+            <span class="project-status mono">No longer live</span>
+          </article>
         </div>
       </section>
 
@@ -335,21 +467,21 @@
               </div>
             </article>
             <article class="timeline-item reveal">
-              <div class="timeline-date mono">APR 2026 &mdash; PRESENT</div>
+              <div class="timeline-date mono">APR 2026 &mdash; AUG 2026</div>
               <div>
                 <p class="company mono">MEST AFRICA &middot; GHANA</p>
                 <h3>Project Supervisor</h3>
                 <ul>
                   <li>
-                    Match startups with experts and help plan their projects.
+                    Matched startups with experts and helped plan their projects.
                   </li>
                   <li>
-                    Summarize what each startup needs and present it to the
+                    Summarized what each startup needed and presented it to the
                     program management team.
                   </li>
                   <li>
-                    Check in on progress every two weeks and help teams when
-                    they get stuck.
+                    Checked in on progress every two weeks and helped teams when
+                    they got stuck.
                   </li>
                 </ul>
               </div>
@@ -499,10 +631,10 @@
               <dt>LinkedIn</dt>
               <dd>
                 <a
-                  href="https://www.linkedin.com/in/mr-donkor-ezekiel"
+                  href="https://www.linkedin.com/in/donkor-ezekiel"
                   target="_blank"
                   rel="noreferrer"
-                  >mr-donkor-ezekiel</a
+                  >donkor-ezekiel</a
                 >
               </dd>
             </div>
