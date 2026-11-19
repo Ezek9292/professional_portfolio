@@ -36,6 +36,17 @@ jobs:
             "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" 'echo "SSH OK as $(whoami) on $(hostname)"' 2>&1 \
             | grep -E "Authenticating to|Offering public key|Server accepts key|Authentications that can continue|Permission denied|SSH OK"
 
+      - name: Add cache-busting versions to asset links
+        run: |
+          # Cloudflare caches CSS/JS/images for days. Adding ?v=<commit> gives
+          # each deploy fresh URLs so visitors get the new files right away.
+          VERSION="${GITHUB_SHA::7}"
+          sed -i -E \
+            -e "s#(href|src)=\"(styles\.css|script\.js)\"#\1=\"\2?v=${VERSION}\"#g" \
+            -e "s#(href|src)=\"(assets/[^\"?]+)\"#\1=\"\2?v=${VERSION}\"#g" \
+            index.html
+          grep -nE 'v=[0-9a-f]{7}' index.html
+
       - name: Upload site files
         env:
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
