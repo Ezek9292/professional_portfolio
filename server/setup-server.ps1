@@ -141,8 +141,11 @@ $Upload = "/tmp/portfolio-upload"
 Invoke-Native ssh ($SshOpts + @($Target, "rm -rf $Upload && mkdir -p $Upload"))
 $LocalPaths = $SiteFiles | ForEach-Object { Join-Path $RepoRoot $_ }
 Invoke-Native scp ($SshOpts + @("-r") + $LocalPaths + @("${Target}:$Upload/"))
-# Replace the site contents only inside $SiteDir, then hand ownership to the deploy user.
-Invoke-Native ssh ($SshOpts + @($Target, "test -d $SiteDir && rsync -a --delete $Upload/ $SiteDir/ && chown -R deploy:deploy $SiteDir && rm -rf $Upload"))
+# Replace the site contents only inside $SiteDir, hand ownership to the deploy user and
+# reset permissions: scp from Windows can create folders Nginx (www-data) can't open.
+Invoke-Native ssh ($SshOpts + @($Target, ("test -d $SiteDir && rsync -a --delete $Upload/ $SiteDir/ && " +
+    "chown -R deploy:deploy $SiteDir && find $SiteDir -type d -exec chmod 755 {} + && " +
+    "find $SiteDir -type f -exec chmod 644 {} + && rm -rf $Upload")))
 
 # --- 4. Check ------------------------------------------------------------------------
 Step "Checking the site on the server"
